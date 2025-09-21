@@ -145,9 +145,3 @@ Future enhancements:
 - [ ] Integration with more AI providers
 - [ ] Mobile app companion
 - [ ] Advanced analytics dashboard
-
----
-
-Built with ❤️ using Ruby on Rails, modern web technologies, and AI-powered services.
-
-# voice_assist_ruby
