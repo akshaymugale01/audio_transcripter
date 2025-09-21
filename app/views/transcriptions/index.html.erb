@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+          <i class="bi bi-list-ul me-2"></i>
+          All Transcriptions
+        </h2>
+        <%= link_to transcribe_path, class: "btn btn-primary" do %>
+          <i class="bi bi-plus-circle me-2"></i>
+          New Transcription
+        <% end %>
+      </div>
+
+      <% if @transcriptions.any? %>
+        <div class="row">
+          <% @transcriptions.each do |transcription| %>
+            <div class="col-md-6 mb-4">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">
+                    Session: <%= transcription.session_id[0..8] %>...
+                  </h6>
+                  <span class="badge bg-<%= transcription.status == 'completed' ? 'success' : transcription.status == 'processing' ? 'warning' : 'danger' %>">
+                    <%= transcription.status.capitalize %>
+                  </span>
+                </div>
+                <div class="card-body">
+                  <p class="text-muted mb-2">
+                    <i class="bi bi-clock me-1"></i>
+                    <%= transcription.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+                  </p>
+                  
+                  <% if transcription.raw_text.present? %>
+                    <p class="mb-3">
+                      <%= truncate(transcription.raw_text, length: 150) %>
+                    </p>
+                  <% end %>
+
+                  <div class="d-flex gap-2">
+                    <%= link_to transcription_path(transcription), class: "btn btn-outline-primary btn-sm" do %>
+                      <i class="bi bi-eye me-1"></i>
+                      View Details
+                    <% end %>
+                    
+                    <% if transcription.summary.present? %>
+                      <%= link_to summary_transcription_path(transcription), 
+                          class: "btn btn-outline-info btn-sm",
+                          data: { 
+                            bs_toggle: "modal", 
+                            bs_target: "#summaryModal#{transcription.id}",
+                            remote: true
+                          } do %>
+                        <i class="bi bi-file-text me-1"></i>
+                        View Summary
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-5">
+          <i class="bi bi-mic-mute text-muted" style="font-size: 4rem;"></i>
+          <h4 class="text-muted mt-3">No transcriptions yet</h4>
+          <p class="text-muted">Start by creating your first voice transcription</p>
+          <%= link_to transcribe_path, class: "btn btn-primary btn-lg mt-3" do %>
+            <i class="bi bi-mic-fill me-2"></i>
+            Start Recording
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

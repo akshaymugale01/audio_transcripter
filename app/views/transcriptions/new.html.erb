@@ -1,0 +1,105 @@
+<div class="container mt-5" data-controller="transcription">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">
+            <i class="bi bi-mic-fill me-2"></i>
+            Voice Transcription & Summarization
+          </h2>
+        </div>
+        <div class="card-body">
+          
+          <!-- Recording Controls -->
+          <div class="text-center mb-4">
+            <button data-transcription-target="startBtn" data-action="click->transcription#startRecording" class="btn btn-success btn-lg me-3" disabled>
+              <i class="bi bi-play-circle-fill me-2"></i>
+              Start Listening
+            </button>
+            <button data-transcription-target="stopBtn" data-action="click->transcription#stopRecording" class="btn btn-danger btn-lg" style="display: none;">
+              <i class="bi bi-stop-circle-fill me-2"></i>
+              Stop Listening
+            </button>
+          </div>
+
+          <!-- Status Display -->
+          <div class="mb-4">
+            <div class="alert alert-info" data-transcription-target="statusAlert">
+              <i class="bi bi-info-circle me-2"></i>
+              <span data-transcription-target="statusText">Click "Start Listening" to begin transcription</span>
+            </div>
+          </div>
+
+          <!-- Real-time Transcription Display -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="bi bi-chat-text me-2"></i>
+                    Live Transcription
+                  </h5>
+                </div>
+                <div class="card-body" style="min-height: 300px; max-height: 400px; overflow-y: auto;">
+                  <div data-transcription-target="liveTranscription" class="text-muted subtitle-text">
+                    Transcription will appear here as you speak...
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="bi bi-file-text me-2"></i>
+                    Summary
+                  </h5>
+                </div>
+                <div class="card-body" style="min-height: 300px; max-height: 400px; overflow-y: auto;">
+                  <div data-transcription-target="summaryContent" class="text-muted">
+                    Summary will be generated after you stop recording...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Final Results -->
+          <div data-transcription-target="finalResults" style="display: none;" class="mt-4">
+            <hr>
+            <div class="row">
+              <div class="col-12">
+                <h4>
+                  <i class="bi bi-clipboard-check me-2"></i>
+                  Final Transcription
+                </h4>
+                <div class="card">
+                  <div class="card-body">
+                    <div data-transcription-target="finalTranscription"></div>
+                    <div class="mt-3">
+                      <button data-action="click->transcription#copyTranscription" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-clipboard me-1"></i>
+                        Copy Transcription
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Speaker Information (if available) -->
+          <div data-transcription-target="speakerInfo" style="display: none;" class="mt-3">
+            <h5>
+              <i class="bi bi-people me-2"></i>
+              Speaker Information
+            </h5>
+            <div data-transcription-target="speakersList"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

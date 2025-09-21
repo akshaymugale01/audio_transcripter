@@ -1,0 +1,115 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+          <i class="bi bi-file-text me-2"></i>
+          Transcription Details
+        </h2>
+        <%= link_to transcriptions_path, class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to List
+        <% end %>
+      </div>
+
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Session: <%= @transcription.session_id %></h5>
+          <span class="badge bg-<%= @transcription.status == 'completed' ? 'success' : @transcription.status == 'processing' ? 'warning' : 'danger' %> fs-6">
+            <%= @transcription.status.capitalize %>
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <strong>Created:</strong> <%= @transcription.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+            </div>
+            <% if @transcription.duration_seconds.present? %>
+              <div class="col-md-6">
+                <strong>Duration:</strong> <%= @transcription.duration_seconds %> seconds
+              </div>
+            <% end %>
+          </div>
+
+          <% if @transcription.raw_text.present? %>
+            <div class="mb-4">
+              <h5>
+                <i class="bi bi-chat-text me-2"></i>
+                Transcription
+              </h5>
+              <div class="card">
+                <div class="card-body">
+                  <p class="mb-0"><%= simple_format(@transcription.raw_text) %></p>
+                  <div class="mt-3">
+                    <button class="btn btn-outline-primary btn-sm" onclick="copyToClipboard('<%= j(@transcription.raw_text) %>')">
+                      <i class="bi bi-clipboard me-1"></i>
+                      Copy Transcription
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @transcription.summary.present? %>
+            <div class="mb-4">
+              <h5>
+                <i class="bi bi-file-text me-2"></i>
+                Summary
+              </h5>
+              <div class="card">
+                <div class="card-body">
+                  <div class="alert alert-success">
+                    <%= simple_format(@transcription.summary) %>
+                  </div>
+                  <button class="btn btn-outline-success btn-sm" onclick="copyToClipboard('<%= j(@transcription.summary) %>')">
+                    <i class="bi bi-clipboard me-1"></i>
+                    Copy Summary
+                  </button>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @transcription.speakers.any? %>
+            <div class="mb-4">
+              <h5>
+                <i class="bi bi-people me-2"></i>
+                Speaker Information
+              </h5>
+              <div class="d-flex gap-2">
+                <% @transcription.speakers.each_with_index do |speaker, index| %>
+                  <span class="badge bg-secondary">Speaker <%= index + 1 %></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @transcription.metadata.present? %>
+            <div class="mb-4">
+              <h6>Metadata</h6>
+              <pre class="bg-light p-2 rounded"><%= JSON.pretty_generate(@transcription.metadata) %></pre>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+      // Create temporary success message
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
+      alert.style.zIndex = '9999';
+      alert.innerHTML = '<i class="bi bi-check-circle me-2"></i>Copied to clipboard!';
+      document.body.appendChild(alert);
+      
+      setTimeout(() => {
+        alert.remove();
+      }, 2000);
+    });
+  }
+</script>

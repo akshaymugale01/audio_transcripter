@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  session_id: MyString
+  raw_text: MyText
+  summary: MyText
+  status: MyString
+  speaker_data: MyText
+  created_at: 2025-09-20 16:36:29
+  updated_at: 2025-09-20 16:36:29
+
+two:
+  session_id: MyString
+  raw_text: MyText
+  summary: MyText
+  status: MyString
+  speaker_data: MyText
+  created_at: 2025-09-20 16:36:29
+  updated_at: 2025-09-20 16:36:29
